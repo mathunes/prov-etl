@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/index.css">
+    <script type="text/javascript" src="../../js/vis-network.min.js"></script>
+    <title>ProvETL</title>
+</head>
+
+<body>
+    <div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+
+    <div id="container" class="container-sidebar-active">
+        <h1 th:inline="text">
+            Visualization on the dataset perspective from <b th:text="${dataflow.name}"></b> dataflow
+        </h1>
+
+        <div style="display: flex; flex-direction: row;">
+            <div class="content">
+                <div id="graph-container">
+
+                </div>
+            </div>
+
+            <div class="aside-content">
+                <div id="description">
+                    <span>Within the workspace, you'll find a graph comprising nodes and edges. Each node represents a
+                        dataset.
+                        To explore the dataset's and data transformation values, <b>simply click on the respective node</b>.
+                        This action will allow you to access and examine the attributes associated with that particular
+                        entity.</span>
+
+                    <div id="legend">
+                        <h3>Color legend</h3>
+                        <div>
+                            <div class="color-input">
+                                <div class="color"></div>
+                                <span class="description">Dataset input</span>
+                            </div>
+                            <div class="color-output">
+                                <div class="color"></div>
+                                <span class="description">Dataset output</span>
+                            </div>
+                            <div class="color-transformation">
+                                <div class="color"></div>
+                                <span class="description">Data transformation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="query-dashboard">
+                    <h2></h2>
+
+                    <h3>Attributes: </h3>
+
+                    <div class="attributes">
+
+                    </div>
+
+                    <h3>Conditions: </h3>
+
+                    <textarea placeholder="Example: attribute_name_1 > 10 and attribute_name_2 = test"></textarea>
+
+                    <button id="run-query-btn" onclick="handleRunDataSetQueryButtonClick()">Run Query</button>
+                </div>
+
+                <div id="data-transformation">
+
+                    <h2></h2>
+
+                    <ul class="values-list">
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="query-result-modal-background">
+        <div id="query-result-modal-container">
+            <div class="query-result-modal-header">
+                <h4>Dataset</h4>
+                <span class="material-symbols-outlined" onclick="handleCloseModalClick()">close</span>
+            </div>
+            <div class="query-result-modal-body">
+                <table>
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        var dataTransformationDTOJson = JSON.parse(/*[[${dataTransformationDTOJson}]]*/ '[]');
+
+        var dataflowName = /*[[${dataflow.name}]]*/ '';
+    </script>
+
+    <script src="../../js/index.js"></script>
+    <script>
+
+        const idsString = generateIdsString(dataTransformationDTOJson);
+        const pairsString = generateIdPairsString(dataTransformationDTOJson);
+
+        const container = document.getElementById("graph-container");
+        const dot = `
+            dinetwork {
+                node[shape=box];
+                ${idsString};
+                ${pairsString}
+            }
+        `;
+
+        var options = {
+            nodes: {
+                margin: 10,
+                color: {
+                    highlight: {
+                        border: '#000000',
+                    }
+                }
+            },
+            // layout: {
+            //     hierarchical: {
+            //         sortMethod: 'directed',
+            //     },
+            // },
+            // physics: {
+            //     enabled: false,
+            //     solver: "repulsion",
+            //     repulsion: {
+            //         nodeDistance: 100
+            //     }
+            // }
+        };
+
+        var data = vis.parseDOTNetwork(dot);
+        var network = new vis.Network(container, data, options);
+
+        network.stabilize();
+
+        network.on('click', function (params) {
+            const nodes = this.body.nodes;
+            const edges = this.body.edges;
+
+            if (params.nodes.length === 0) {
+                showDescription();
+            } else {
+                const nodeId = params.nodes[0];
+                const clickedNode = nodes[nodeId];
+                const isTransformation = clickedNode.options.is_transformation === 'true';
+
+                if (!isTransformation) {
+                    const dataSetSchemaId = nodeId.split("_").pop();
+
+                    setClickedNodeId(dataSetSchemaId);
+
+                    for (const edgeId in edges) {
+                        const edge = edges[edgeId];
+
+                        if (edge.fromId === nodeId || edge.toId === nodeId) {
+                            setClickedEdgeId(edge.title);
+                            break;
+                        }
+                    }
+
+                    setDataSetSchemaName(clickedNode.options.label);
+
+                    getAttributesByDataSetSchemaId(nodeId)
+                        .then(attributes => {
+                            showQueryAttributes(attributes);
+                        });
+                } else {
+                    showTransformationTab();
+
+                    const transformationName = clickedNode.options.label;
+                    const transformationId = nodeId.split("_").pop();
+
+                    setTransformationName(transformationName);
+                    setClickedEdgeId(transformationId);
+
+                    showTransformationValues();
+                }
+            }
+
+        });
+
+    </script>
+</body>
+
+</html>

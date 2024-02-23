@@ -1,0 +1,472 @@
+{
+	"info": {
+		"_postman_id": "0342b526-1bce-420c-9482-c7851e2aae51",
+		"name": "DfAnalyzerETL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18746960"
+	},
+	"item": [
+		{
+			"name": "DATAFLOW",
+			"item": [
+				{
+					"name": "CREATE DATAFLOW",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"prograd_cursos\",\r\n    \"description\": \"description about prograd_cursos\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/dataflows/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"dataflows",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ALL DATAFLOWS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/dataflows/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"dataflows",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET DATAFLOW BY ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/dataflows/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"dataflows",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE DATAFLOW",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"prograd_alunos\",\r\n    \"description\": \"description about prograd_alunos\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/dataflows/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"dataflows",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE DATAFLOW",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/dataflows/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"dataflows",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET DATAFLOW WITH DATASETS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/dataflows/1/transformations-dataset",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"dataflows",
+								"1",
+								"transformations-dataset"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DATA TRANSFORMATION",
+			"item": [
+				{
+					"name": "CREATE DATA TRANSFORMATION",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"normalization\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/dataflows/1/transformations",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"dataflows",
+								"1",
+								"transformations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE DATA TRANSFORMATION",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"executedBy\": \"Matheus\",\r\n    \"startedAt\": \"2023-11-15T08:00:00\",\r\n    \"finishedAt\": \"2023-11-15T08:30:00\",\r\n    \"numberOfInputTuples\": 100,\r\n    \"numberOfOutputTuples\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/dataflows/1/transformations/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"dataflows",
+								"1",
+								"transformations",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ALL DATA TRANSFORMATIONS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/dataflows/1/transformations",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"dataflows",
+								"1",
+								"transformations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET DATA TRANSFORMATION BY ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/dataflows/1/transformations/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"dataflows",
+								"1",
+								"transformations",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DATA SET SCHEMA",
+			"item": [
+				{
+					"name": "CREATE DATA SET SCHEMA",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"relationType\": \"INPUT\",\r\n  \"dataSetSchema\": {\r\n    \"attributes\": [\r\n      {\r\n        \"name\": \"iduff\",\r\n        \"type\": \"VARCHAR\"\r\n      },\r\n      {\r\n        \"name\": \"name\",\r\n        \"type\": \"VARCHAR\"\r\n      }\r\n    ]\r\n  }\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/dataflows/1/transformations/1/data-set-schema",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"dataflows",
+								"1",
+								"transformations",
+								"1",
+								"data-set-schema"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GEL ALL DATA SET SCHEMA",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/dataflows/1/transformations/1/data-set-schema",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"dataflows",
+								"1",
+								"transformations",
+								"1",
+								"data-set-schema"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET DATA SET SCHEMA BY ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/dataflows/1/transformations/1/data-set-schema/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"dataflows",
+								"1",
+								"transformations",
+								"1",
+								"data-set-schema",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ATTRIBUTES BY DATA SET SCHEMA ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/dataflows/1/data-set-schema/1/attributes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"dataflows",
+								"1",
+								"data-set-schema",
+								"1",
+								"attributes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DATA SET",
+			"item": [
+				{
+					"name": "CREATE DATA SET",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"iduff\": \"E432.684\",\r\n    \"name\": \"MATHEUS\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/dataflows/1/transformations/1/data-set-schema/1/data-set",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"dataflows",
+								"1",
+								"transformations",
+								"1",
+								"data-set-schema",
+								"1",
+								"data-set"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ALL DATA SET DATA",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/dataflows/1/transformations/1/data-set-schema/1/data-set?attributes=iduff,name&conditions=name=matheus",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"dataflows",
+								"1",
+								"transformations",
+								"1",
+								"data-set-schema",
+								"1",
+								"data-set"
+							],
+							"query": [
+								{
+									"key": "attributes",
+									"value": "iduff,name"
+								},
+								{
+									"key": "conditions",
+									"value": "name=matheus"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

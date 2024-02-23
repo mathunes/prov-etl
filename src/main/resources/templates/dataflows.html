@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <title>ProvETL</title>
+</head>
+<body>
+    <div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+
+    <div id="container" class="container-sidebar-active">
+        <h1>Dataflows</h1>
+
+        <div class="content">
+            <table>
+                <thead>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <!-- <th>Created At</th>
+                    <th>Updated At</th> -->
+                    <th></th>
+                </thead>
+                <tbody id="dataflow-table-body">
+                    <tr th:each="dataflow : ${dataflows}">
+                        <td th:text="${dataflow.id}"></td>
+                        <td th:text="${dataflow.name}"></td>
+                        <td th:text="${dataflow.description}"></td>
+                        <!-- <td th:text="${dataflow.createdAt}"></td>
+                        <td th:text="${dataflow.updatedAt}"></td> -->
+                        <td><a th:href="@{'/dataflows/' + ${dataflow.id}}">Show Dataflow</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="../../js/index.js"></script>
+</body>
+
+</html>

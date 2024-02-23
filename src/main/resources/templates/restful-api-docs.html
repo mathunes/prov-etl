@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <title>ProvETL</title>
+</head>
+
+<body>
+    <div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+
+    <div id="container" class="container-sidebar-active">
+        <h1>RESTful API - Docs</h1>
+
+        <div class="content">
+
+            <div id="doc-description">
+                <p>The purpose of this guide is to present the methods and endpoints available for dataflow
+                    instrumentation. In this version, the documentation is focused on instrumenting the data flow of a
+                    Data Warehouse loading process, although it is not limited to this process and can be adapted for
+                    other scenarios.</p>
+
+                <p>To provide context for the entities presented below, we will detail their descriptions and
+                    relationships. The central entity, the starting point, is the Dataflow, which represents the data
+                    flow in an abstract manner and includes descriptive attributes such as "name" and "description". The second entity is
+                    the DataTransformation, which represents data transformations that occur in the data flow. A
+                    Dataflow can contain multiple DataTransformations, each with name from transformation.
+                    The third entity is the DataSetSchema, which represents the structure of transformed
+                    data, both at the input (before transformation) and at the output (after transformation). A
+                    DataTransformation can be related to multiple DataSetSchemas, and this relationship is categorized
+                    as "input" or "output". Furthermore, a DataSetSchema includes a list of attributes to represent the
+                    attributes and their types. Finally, the last entity is the DataSet itself, which represents the
+                    actual instance of the data in the transformation, not just the description but also the data
+                    values.</p>
+
+                <p>To perform instrumentation, it is necessary to make calls to the endpoints of this API, as documented
+                    here, in order to visualize the data flow through the interface. According to the previous
+                    description, the process begins with the creation of a Dataflow. With the returned ID, you can
+                    proceed with additional operations. After creating the Dataflow and obtaining the corresponding ID,
+                    you can create as many DataTransformations as needed, also saving the corresponding IDs for future
+                    use. With the IDs of the DataTransformations in hand, you can create the DataSetSchemas, specifying
+                    the attributes, which consist of "name" and "type" pairs, with possible types including VARCHAR,
+                    INT, FLOAT, DATE, DATETIME.</p>
+
+                <p>After creating the entire structure, data is sent to the DataSet, following the structure defined in
+                    the DataSetSchema. After this step, the data can be queried through the graphical interface.</p>
+            </div>
+
+            <h2 id="doc-title">Entities</h2>
+
+            <div id="entities">
+                <div class="entity">
+                    <h3 class="entity-name">Dataflow</h3>
+
+                    <div class="endpoints">
+                        <div class="endpoint">
+                            <h4>Create Dataflow</h4>
+
+                            <div class="request">
+                                <p class="method">POST</p>
+                                <p class="url">/api/v1/dataflows</p>
+                            </div>
+                            
+                            <div class="example">
+                                <h5>Body example: </h5>
+
+<pre>{
+    "name": "prograd_alunos",
+    "description": "description about prograd_alunos"
+}</pre>
+                            </div>
+                        </div>
+
+                        <div class="endpoint">
+                            <h4>Get All Dataflows</h4>
+
+                            <div class="request">
+                                <p class="method">GET</p>
+                                <p class="url">/api/v1/dataflows</p>
+                            </div>
+                        </div>
+
+                        <div class="endpoint">
+                            <h4>Get Dataflow by ID</h4>
+
+                            <div class="request">
+                                <p class="method">GET</p>
+                                <p class="url">/api/v1/dataflows/{dataflow-id}</p>
+                            </div>
+                        </div>
+
+                        <div class="endpoint">
+                            <h4>Get Dataflow with Datasets</h4>
+
+                            <div class="request">
+                                <p class="method">GET</p>
+                                <p class="url">/api/v1/dataflows/{dataflow-id}/transformations-dataset</p>
+                            </div>
+                        </div>
+
+                        <div class="endpoint">
+                            <h4>Update Dataflow</h4>
+
+                            <div class="request">
+                                <p class="method">PUT</p>
+                                <p class="url">/api/v1/dataflows/{dataflow-id}</p>
+                            </div>
+
+                            <div class="example">
+                                <h5>Body example: </h5>
+
+<pre>{
+    "name": "prograd_alunos",
+    "description": "description about prograd_alunos"
+}</pre>
+                            </div>
+                        </div>
+
+                        <div class="endpoint">
+                            <h4>Delete Dataflow</h4>
+
+                            <div class="request">
+                                <p class="method">DELETE</p>
+                                <p class="url">/api/v1/dataflows/{dataflow-id}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="entity">
+                    <h3 class="entity-name">DataTransformation</h3>
+
+                    <div class="endpoints">
+                        <div class="endpoint">
+                            <h4>Create DataTransformation</h4>
+
+                            <div class="request">
+                                <p class="method">POST</p>
+                                <p class="url">/api/v1/dataflows/{dataflow-id}/transformations</p>
+                            </div>
+                            
+                            <div class="example">
+                                <h5>Body example: </h5>
+
+<pre>{
+    "name": "normalization",
+}</pre>
+                            </div>
+                        </div>
+
+                        <div class="endpoint">
+                            <h4>Get All DataTransformations</h4>
+
+                            <div class="request">
+                                <p class="method">GET</p>
+                                <p class="url">/api/v1/dataflows/{dataflow-id}/transformations</p>
+                            </div>
+                        </div>
+
+                        <div class="endpoint">
+                            <h4>Get DataTransformation by ID</h4>
+
+                            <div class="request">
+                                <p class="method">GET</p>
+                                <p class="url">/api/v1/dataflows/{dataflow-id}/transformations/{datatransformation-id}</p>
+                            </div>
+                        </div>
+
+                        <div class="endpoint">
+                            <h4>Update DataTransformation</h4>
+
+                            <div class="request">
+                                <p class="method">PUT</p>
+                                <p class="url">/api/v1/dataflows/{dataflow-id}/transformations/{datatransformation-id}</p>
+                            </div>
+
+                            <div class="example">
+                                <h5>Body example: </h5>
+
+<pre>{
+    "executedBy": "Name",
+    "startedAt": "2023-11-15T08:00:00",
+    "finishedAt": "2023-11-15T08:30:00",
+    "numberOfInputTuples": 100,
+    "numberOfOutputTuples": 100
+}</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="entity">
+                    <h3 class="entity-name">DataSetSchema</h3>
+
+                    <div class="endpoints">
+                        <div class="endpoint">
+                            <h4>Create DataSetSchema</h4>
+
+                            <div class="request">
+                                <p class="method">POST</p>
+                                <p class="url">/api/v1/dataflows/{dataflow-id}/transformations/{datatransformation-id}/data-set-schema</p>
+                            </div>
+                            
+                            <div class="example">
+                                <h5>Body example: </h5>
+
+<pre>{
+    "relationType": "INPUT",
+    "dataSetSchema": {
+    "attributes": [
+            {
+                "name": "identification",
+                "type": "VARCHAR"
+            },
+            {
+                "name": "description",
+                "type": "VARCHAR"
+            }
+        ]
+    }
+}</pre>
+                            </div>
+                        </div>
+
+                        <div class="endpoint">
+                            <h4>Get All DataSetSchema</h4>
+
+                            <div class="request">
+                                <p class="method">GET</p>
+                                <p class="url">/api/v1/dataflows/{dataflow-id}/transformations/{datatransformation-id}/data-set-schema</p>
+                            </div>
+                        </div>
+
+                        <div class="endpoint">
+                            <h4>Get DataSetSchema by ID</h4>
+
+                            <div class="request">
+                                <p class="method">GET</p>
+                                <p class="url">/api/v1/dataflows/{dataflow-id}/transformations/{datatransformation-id}/data-set-schema/{data-set-schema-id}</p>
+                            </div>
+                        </div>
+
+                        <div class="endpoint">
+                            <h4>Get Attributes by DataSetSchema</h4>
+
+                            <div class="request">
+                                <p class="method">GET</p>
+                                <p class="url">/api/v1/dataflows/{dataflow-id}/data-set-schema/{data-set-schema-id}/attributes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="entity">
+                    <h3 class="entity-name">DataSet</h3>
+
+                    <div class="endpoints">
+                        <div class="endpoint">
+                            <h4>Create DataSet</h4>
+
+                            <div class="request">
+                                <p class="method">POST</p>
+                                <p class="url">/api/v1/dataflows/{dataflow-id}/transformations/{datatransformation-id}/data-set-schema/{data-set-schema-id}/data-set</p>
+                            </div>
+                            
+                            <div class="example">
+                                <h5>Body example: </h5>
+
+<pre>{
+    "identification": "432684",
+    "description": "test"
+}</pre>
+                            </div>                            
+                        </div>
+
+                        <div class="endpoint">
+                            <h4>Get All DataSet Data</h4>
+
+                            <div class="request">
+                                <p class="method">GET</p>
+                                <p class="url">/api/v1/dataflows/{dataflow-id}/transformations/{datatransformation-id}/data-set-schema/{data-set-schema-id}/data-set?attributes=identification,description&conditions=description=test</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="../../js/index.js"></script>
+</body>
+
+</html>
