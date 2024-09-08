@@ -86,11 +86,22 @@ public class DataSetRepository {
                 StringBuilder whereClause = new StringBuilder();
 
                 for (String condition : conditionsArray) {
-                    String[] parts = condition.split("\\s*=\\s*");
+                    String conditionChar = "";
+
+                    if (condition.contains("=")) {
+                        conditionChar = "=";
+                    } else if (condition.contains(">")) {
+                        conditionChar = ">";
+                    } else if (condition.contains("<")) {
+                        conditionChar = "<";
+                    }
+
+                    String[] parts = condition.split("\\s*" + conditionChar + "\\s*");
+                    
                     if (parts.length == 2) {
                         String attributeName = parts[0].trim();
                         String paramValue = parts[1].trim();
-                        whereClause.append(attributeName).append(" = ? and ");
+                        whereClause.append(attributeName).append(" " + conditionChar + " ? and ");
                         params.add(paramValue);
                     }
                 }

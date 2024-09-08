@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../css/index.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css">
     <script type="text/javascript" src="../../js/vis-network.min.js"></script>
     <title>ProvETL</title>
 </head>
@@ -91,10 +92,14 @@
         <div id="query-result-modal-container">
             <div class="query-result-modal-header">
                 <h4>Dataset</h4>
-                <span class="material-symbols-outlined" onclick="handleCloseModalClick()">close</span>
+
+                <div>
+                    <button onclick="exportToCSV()" class="export-as-csv">Export as CSV</button>
+                    <span class="material-symbols-outlined" onclick="handleCloseModalClick()">close</span>
+                </div>
             </div>
             <div class="query-result-modal-body">
-                <table>
+                <table id="query-result-table">
                     <thead></thead>
                     <tbody></tbody>
                 </table>
@@ -109,8 +114,9 @@
     </script>
 
     <script src="../../js/index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
     <script>
-
         const idsString = generateIdsString(dataTransformationDTOJson);
         const pairsString = generateIdPairsString(dataTransformationDTOJson);
 
@@ -132,18 +138,18 @@
                     }
                 }
             },
-            // layout: {
-            //     hierarchical: {
-            //         sortMethod: 'directed',
-            //     },
-            // },
-            // physics: {
-            //     enabled: false,
-            //     solver: "repulsion",
-            //     repulsion: {
-            //         nodeDistance: 100
-            //     }
-            // }
+            layout: {
+                hierarchical: {
+                    sortMethod: 'directed',
+                },
+            },
+            physics: {
+                enabled: false,
+                solver: "repulsion",
+                repulsion: {
+                    nodeDistance: 100
+                }
+            }
         };
 
         var data = vis.parseDOTNetwork(dot);

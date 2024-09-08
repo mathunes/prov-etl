@@ -1,6 +1,8 @@
 const pathnameURL = window.location.pathname;
 const originURL = window.location.origin;
 
+let queryResultTable;
+
 const sidebarItems = document.querySelectorAll(".sidebar-item");
 
 for (let i = 0; i < sidebarItems.length; i++) {
@@ -233,6 +235,8 @@ function handleCloseModalClick() {
     const modalElement = document.getElementById("query-result-modal-background");
     modalElement.classList.remove("display-flex");
     modalElement.classList.add("display-none");
+
+    queryResultTable.destroy();
 }
 
 function showModal() {
@@ -283,6 +287,13 @@ function getDataSetValues(dataTransformationId, dataSetSchemaId, attributesSelec
                 }
 
                 tbody.appendChild(row);
+            });
+
+            queryResultTable = new DataTable('#query-result-table',  {
+                info: false,
+                ordering: true,
+                retrieve: true,
+                paging: false
             });
 
             showModal();
@@ -349,4 +360,22 @@ function handleRunDataSetQueryButtonClick() {
     } else {
         getDataSetValues(getClickedEdgeId(), getClickedNodeId(), attributesSelected, conditions);
     }
+}
+
+function exportToCSV() {
+    const rows = document.querySelectorAll('table#query-result-table tr'),
+          link = document.createElement('a');
+
+    link.download = 'dataset.csv';
+    link.href = URL.createObjectURL(
+        new Blob(
+            [
+                Array.from(rows).map(row => {
+                    return Array.from(row.querySelectorAll('td, th')).map(col => col.innerText).join(',');
+                }).join('\n')
+            ],
+            { type: 'text/plain' }
+        )
+    );
+    link.click();
 }

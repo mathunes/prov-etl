@@ -249,6 +249,12 @@ html {
     margin-bottom: 2rem;
 }
 
+#query-result-modal-background #query-result-modal-container .query-result-modal-header div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 #query-result-modal-background #query-result-modal-container .query-result-modal-header h4 {
     font-size: 1.2rem;
 }
@@ -262,12 +268,12 @@ html {
     height: 90%;
 }
 
-#query-result-modal-background #query-result-modal-container .query-result-modal-body table {
-    text-align: left;
-    width: 100%;
-    table-layout: fixed;
+#query-result-modal-background #query-result-modal-container .query-result-modal-body #query-result-table {
+    /* text-align: left; */
+    width: 100% !important;
+    /* table-layout: fixed; */
 }
-
+/*
 #query-result-modal-background #query-result-modal-container .query-result-modal-body table thead tr th {
     padding: 0.5rem;
 }
@@ -283,7 +289,7 @@ html {
 
 #query-result-modal-background #query-result-modal-container .query-result-modal-body table tbody tr:nth-child(even) {
     background-color: #EDF0F5;
-}
+} */
 
 #data-transformation h2 {
     word-break: break-word;
@@ -412,4 +418,14 @@ html {
 
 #legend div .color-transformation .color {
     background-color: #FFADAD;
+}
+
+.export-as-csv {
+    margin: 0 10px 0 0;
+    background-color: #00FF00;
+    color: #333333;
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 0.5rem;
+    cursor: pointer;
 }
